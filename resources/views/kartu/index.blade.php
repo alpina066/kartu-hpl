@@ -95,7 +95,7 @@
                     <td>{{ $item->bbl }}</td>
                     <td>{{ $item->lk_ld }}</td>
                     <td class="aksi">
-                        <a href="{{ route('kartu-hpl.edit', $item) }}" class="btn btn-edit">Edit</a>
+                        <a href="{{ route('kartu-hpl.edit', ['kartu_hpl' => $item->id]) }}" class="btn btn-edit">Edit</a>
 
                         <form action="{{ route('kartu-hpl.destroy', $item) }}" method="POST"
                               onsubmit="return confirm('Hapus data ini?')">
