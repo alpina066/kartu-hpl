@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\KartuHpl;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class KartuHplController extends Controller
@@ -75,13 +75,14 @@ class KartuHplController extends Controller
             ->with('success', 'Data Kartu HPL berhasil disimpan');
     }
 
-    public function edit($id)
+    public function edit(KartuHpl $kartu_hpl)
     {
-        $data = KartuHpl::findOrFail($id);
-        return view('kartu.edit', compact('data'));
+        return view('kartu.edit', [
+            'data' => $kartu_hpl
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, KartuHpl $kartu_hpl)
     {
         $request->validate([
             'nama' => 'required',
@@ -90,16 +91,16 @@ class KartuHplController extends Controller
             'hpl'  => 'required|date',
         ]);
 
-        $data = KartuHpl::findOrFail($id);
-        $data->update($request->all());
+        $kartu_hpl->update($request->all());
 
         return redirect()->route('kartu-hpl.index')
             ->with('success', 'Data berhasil diperbarui');
     }
 
-    public function destroy($id)
+    public function destroy(KartuHpl $kartu_hpl)
     {
-        KartuHpl::findOrFail($id)->delete();
+        $kartu_hpl->delete();
+
         return redirect()->route('kartu-hpl.index')
             ->with('success', 'Data berhasil dihapus');
     }

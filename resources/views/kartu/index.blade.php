@@ -95,12 +95,13 @@
                     <td>{{ $item->bbl }}</td>
                     <td>{{ $item->lk_ld }}</td>
                     <td class="aksi">
-                        <a href="{{ route('kartu-hpl.edit', $item->id) }}" class="btn btn-edit">Edit</a>
-                        <form method="POST" action="{{ route('kartu-hpl.destroy', $item->id) }}">
+                        <a href="{{ route('kartu-hpl.edit', $item) }}" class="btn btn-edit">Edit</a>
+
+                        <form action="{{ route('kartu-hpl.destroy', $item) }}" method="POST"
+                              onsubmit="return confirm('Hapus data ini?')">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-delete"
-                                onclick="return confirm('Hapus data ini?')">Hapus</button>
+                            <button class="btn btn-delete">Hapus</button>
                         </form>
                     </td>
                 </tr>
