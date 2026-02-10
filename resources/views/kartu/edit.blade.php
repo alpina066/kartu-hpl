@@ -4,7 +4,7 @@
 <div class="container">
     <h3>Edit Kartu HPL</h3>
 
-    <form action="{{ route('kartu-hpl.update', $data->id) }}" method="POST" class="form-card">
+    <form action="{{ route('kartu-hpl.update', $data) }}" method="POST" class="form-card">
         @csrf
         @method('PUT')
 
@@ -47,13 +47,13 @@
                 <div class="form-group">
                     <label>{{ $label }}</label>
 
-                    @if(in_array($name, ['alamat']))
-                        <textarea name="{{ $name }}">{{ $data->$name }}</textarea>
+                    @if($name === 'alamat')
+                        <textarea name="{{ $name }}">{{ old($name, $data->$name) }}</textarea>
                     @else
                         <input
                             type="{{ in_array($name, ['hpht','hpl','partus_tgl']) ? 'date' : 'text' }}"
                             name="{{ $name }}"
-                            value="{{ $data->$name }}"
+                            value="{{ old($name, $data->$name) }}"
                         >
                     @endif
                 </div>

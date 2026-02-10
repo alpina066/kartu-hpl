@@ -16,11 +16,13 @@
                 <div class="form-group">
                     <label>Nama</label>
                     <input type="text" name="nama" value="{{ old('nama') }}">
+                    @error('nama') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
 
                 <div class="form-group">
                     <label>Umur</label>
                     <input type="number" name="umur" value="{{ old('umur') }}">
+                    @error('umur') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
 
                 <div class="form-group">
@@ -46,11 +48,13 @@
                 <div class="form-group">
                     <label>HPHT</label>
                     <input type="date" name="hpht" value="{{ old('hpht') }}">
+                    @error('hpht') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
 
                 <div class="form-group">
                     <label>HPL</label>
                     <input type="date" name="hpl" value="{{ old('hpl') }}">
+                    @error('hpl') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
 
                 <div class="form-group">
