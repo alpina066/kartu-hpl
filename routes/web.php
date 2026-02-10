@@ -13,21 +13,21 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // Profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // Kartu HPL routes
+    Route::prefix('kartu-hpl')->name('kartu-hpl.')->group(function () {
+        Route::get('/', [KartuHplController::class, 'index'])->name('index');
+        Route::get('/create', [KartuHplController::class, 'create'])->name('create');
+        Route::post('/', [KartuHplController::class, 'store'])->name('store');
+        Route::get('/{kartu_hpl}', [KartuHplController::class, 'show'])->name('show');
+        Route::get('/{kartu_hpl}/edit', [KartuHplController::class, 'edit'])->name('edit');
+        Route::put('/{kartu_hpl}', [KartuHplController::class, 'update'])->name('update');
+        Route::delete('/{kartu_hpl}', [KartuHplController::class, 'destroy'])->name('destroy');
+    });
 });
-
-Route::middleware('auth')->group(function () {
-    Route::resource('kartu-hpl', KartuHplController::class);
-    Route::get('/kartu-hpl', [KartuHplController::class, 'index'])->name('kartu.index');
-    Route::get('/kartu-hpl/create', [KartuHplController::class, 'create'])->name('kartu.create');
-    Route::post('/kartu-hpl', [KartuHplController::class, 'store'])->name('kartu.store');
-    Route::post('/kartu-hpl', [KartuHplController::class, 'store'])->middleware('auth');
-});
-
-Route::resource('kartu-hpl', KartuHplController::class)
-    ->middleware('auth');
-
 
 require __DIR__.'/auth.php';
