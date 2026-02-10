@@ -1,5 +1,15 @@
 [phases.setup]
-nixPkgs = ["php82", "php82Extensions.pdo_mysql", "php82Extensions.mbstring", "php82Extensions.openssl", "php82Extensions.tokenizer", "php82Extensions.xml", "php82Extensions.curl", "php82Extensions.fileinfo"]
+nixPkgs = [
+  "php82",
+  "php82Packages.composer",
+  "php82Extensions.pdo_mysql",
+  "php82Extensions.mbstring",
+  "php82Extensions.openssl",
+  "php82Extensions.tokenizer",
+  "php82Extensions.xml",
+  "php82Extensions.curl",
+  "php82Extensions.fileinfo"
+]
 
 [phases.install]
 cmds = [
@@ -7,4 +17,4 @@ cmds = [
 ]
 
 [start]
-cmd = "php artisan migrate --force && php artisan storage:link && php -S 0.0.0.0:$PORT -t public"
+cmd = "php -S 0.0.0.0:$PORT -t public"
