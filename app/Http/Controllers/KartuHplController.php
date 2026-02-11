@@ -75,12 +75,16 @@ class KartuHplController extends Controller
             ->with('success', 'Data Kartu HPL berhasil disimpan');
     }
 
-    public function edit(KartuHpl $kartu_hpl)
+    public function edit($id)
     {
-        return view('kartu.edit', ['data' => $kartu_hpl]);
+        $data = KartuHpl::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        return view('kartu.edit', compact('data'));
     }
 
-    public function update(Request $request, KartuHpl $kartu_hpl)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nama' => 'required',
@@ -89,15 +93,23 @@ class KartuHplController extends Controller
             'hpl'  => 'required|date',
         ]);
 
-        $kartu_hpl->update($request->all());
+        $data = KartuHpl::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        $data->update($request->all());
 
         return redirect()->route('kartu-hpl.index')
             ->with('success', 'Data berhasil diperbarui');
     }
 
-    public function destroy(KartuHpl $kartu_hpl)
+    public function destroy($id)
     {
-        $kartu_hpl->delete();
+        $data = KartuHpl::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        $data->delete();
 
         return redirect()->route('kartu-hpl.index')
             ->with('success', 'Data berhasil dihapus');

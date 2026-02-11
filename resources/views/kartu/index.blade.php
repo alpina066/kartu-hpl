@@ -95,9 +95,9 @@
                     <td>{{ $item->bbl }}</td>
                     <td>{{ $item->lk_ld }}</td>
                     <td class="aksi">
-                        <a href="{{ route('kartu-hpl.edit', $item) }}" class="btn btn-edit">Edit</a>
+                        <a href="{{ route('kartu-hpl.edit', ['kartu_hpl' => $item->id]) }}" class="btn btn-edit">Edit</a>
 
-                        <form method="POST" action="{{ route('kartu-hpl.destroy', $item) }}">
+                        <form method="POST" action="{{ route('kartu-hpl.destroy', ['kartu_hpl' => $item->id]) }}">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-delete"

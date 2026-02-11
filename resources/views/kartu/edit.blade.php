@@ -4,7 +4,7 @@
 <div class="container">
     <h3>Edit Kartu HPL</h3>
 
-    <form action="{{ route('kartu-hpl.update', $data) }}" method="POST" class="form-card">
+    <form action="{{ route('kartu-hpl.update', ['kartu_hpl' => $data->id]) }}" method="POST">
         @csrf
         @method('PUT')
 
