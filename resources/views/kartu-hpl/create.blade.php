@@ -1,53 +1,165 @@
-<x-app-layout>
-<div class="max-w-7xl mx-auto p-6">
+@extends('layouts.app')
 
-<h2 class="text-xl font-semibold mb-4">Tambah Data Kartu HPL</h2>
+@section('content')
+<div class="container">
 
-<form action="/kartu-hpl/store" method="POST" class="space-y-4">
-@csrf
+    <div class="header-bar">
+        <h2>Tambah Data Kartu HPL</h2>
+        <a href="/kartu-hpl" class="btn btn-back">Kembali</a>
+    </div>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<input type="text" name="nama" placeholder="Nama" class="input" required>
-<input type="number" name="umur" placeholder="Umur" class="input">
-<input type="text" name="suami" placeholder="Nama Suami" class="input">
-<input type="text" name="pekerjaan" placeholder="Pekerjaan" class="input">
-<input type="text" name="alamat" placeholder="Alamat" class="input">
-<input type="text" name="dx_keb" placeholder="Dx Kebidanan" class="input">
-<input type="date" name="hpht" class="input">
-<input type="date" name="hpl" class="input">
-<input type="text" name="perdarahan" placeholder="Perdarahan" class="input">
-<input type="text" name="bb" placeholder="BB" class="input">
-<input type="text" name="tb" placeholder="TB" class="input">
-<input type="text" name="tensi" placeholder="Tensi" class="input">
-<input type="text" name="hb" placeholder="HB" class="input">
-<input type="text" name="status_tt" placeholder="Status TT" class="input">
-<input type="text" name="tablet_fe" placeholder="Tablet FE" class="input">
-<input type="text" name="letak_janin" placeholder="Letak Janin" class="input">
-<input type="text" name="lila" placeholder="LILA" class="input">
-<input type="text" name="jarak_anak" placeholder="Jarak Anak" class="input">
-<input type="date" name="partus_tgl" class="input">
-<input type="text" name="penolong" placeholder="Penolong" class="input">
-<input type="text" name="jenis_kelamin" placeholder="Jenis Kelamin" class="input">
-<input type="text" name="cara_lahir" placeholder="Cara Lahir" class="input">
-<input type="text" name="bayi" placeholder="Bayi" class="input">
-<input type="text" name="plasenta" placeholder="Plasenta" class="input">
-<input type="text" name="ku_bayi" placeholder="KU Bayi" class="input">
-<input type="text" name="ku_ibu" placeholder="KU Ibu" class="input">
-<input type="text" name="bbl" placeholder="BBL" class="input">
-<input type="text" name="lk_ld" placeholder="LK / LD" class="input">
+    <div class="form-card">
+        <form action="/kartu-hpl/store" method="POST">
+            @csrf
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" name="nama" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Umur</label>
+                    <input type="number" name="umur">
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Suami</label>
+                    <input type="text" name="suami">
+                </div>
+
+                <div class="form-group">
+                    <label>Pekerjaan</label>
+                    <input type="text" name="pekerjaan">
+                </div>
+
+                <div class="form-group">
+                    <label>Alamat</label>
+                    <input type="text" name="alamat">
+                </div>
+
+                <div class="form-group">
+                    <label>Dx Kebidanan</label>
+                    <input type="text" name="dx_keb">
+                </div>
+
+                <div class="form-group">
+                    <label>HPHT</label>
+                    <input type="date" name="hpht">
+                </div>
+
+                <div class="form-group">
+                    <label>HPL</label>
+                    <input type="date" name="hpl">
+                </div>
+
+                <div class="form-group">
+                    <label>Perdarahan</label>
+                    <input type="text" name="perdarahan">
+                </div>
+
+                <div class="form-group">
+                    <label>BB</label>
+                    <input type="text" name="bb">
+                </div>
+
+                <div class="form-group">
+                    <label>TB</label>
+                    <input type="text" name="tb">
+                </div>
+
+                <div class="form-group">
+                    <label>Tensi</label>
+                    <input type="text" name="tensi">
+                </div>
+
+                <div class="form-group">
+                    <label>HB</label>
+                    <input type="text" name="hb">
+                </div>
+
+                <div class="form-group">
+                    <label>Status TT</label>
+                    <input type="text" name="status_tt">
+                </div>
+
+                <div class="form-group">
+                    <label>Tablet FE</label>
+                    <input type="text" name="tablet_fe">
+                </div>
+
+                <div class="form-group">
+                    <label>Letak Janin</label>
+                    <input type="text" name="letak_janin">
+                </div>
+
+                <div class="form-group">
+                    <label>LILA</label>
+                    <input type="text" name="lila">
+                </div>
+
+                <div class="form-group">
+                    <label>Jarak Anak</label>
+                    <input type="text" name="jarak_anak">
+                </div>
+
+                <div class="form-group">
+                    <label>Tanggal Partus</label>
+                    <input type="date" name="partus_tgl">
+                </div>
+
+                <div class="form-group">
+                    <label>Penolong</label>
+                    <input type="text" name="penolong">
+                </div>
+
+                <div class="form-group">
+                    <label>Jenis Kelamin</label>
+                    <input type="text" name="jenis_kelamin">
+                </div>
+
+                <div class="form-group">
+                    <label>Cara Lahir</label>
+                    <input type="text" name="cara_lahir">
+                </div>
+
+                <div class="form-group">
+                    <label>Bayi</label>
+                    <input type="text" name="bayi">
+                </div>
+
+                <div class="form-group">
+                    <label>Plasenta</label>
+                    <input type="text" name="plasenta">
+                </div>
+
+                <div class="form-group">
+                    <label>Keadaan Umum Bayi</label>
+                    <input type="text" name="ku_bayi">
+                </div>
+
+                <div class="form-group">
+                    <label>Keadaan Umum Ibu</label>
+                    <input type="text" name="ku_ibu">
+                </div>
+
+                <div class="form-group">
+                    <label>BBL</label>
+                    <input type="text" name="bbl">
+                </div>
+
+                <div class="form-group">
+                    <label>LK / LD</label>
+                    <input type="text" name="lk_ld">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">Simpan</button>
+                <a href="/kartu-hpl" class="btn btn-back">Batal</a>
+            </div>
+        </form>
+    </div>
+
 </div>
-
-<div class="flex gap-2 mt-4">
-<button class="px-4 py-2 bg-blue-600 text-white rounded">Simpan</button>
-<a href="/kartu-hpl" class="px-4 py-2 bg-gray-500 text-white rounded">Kembali</a>
-</div>
-
-</form>
-</div>
-</x-app-layout>
-
-<style>
-.input {
-    @apply border border-gray-300 rounded px-3 py-2 w-full;
-}
-</style>
+@endsection
