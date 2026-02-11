@@ -22,7 +22,7 @@
             </p>
 
             <div class="mt-4">
-                <a href="{{ route('kartu-hpl.index') }}" class="btn-primary">
+                <a href="/kartu-hpl" class="btn-primary">
                     Lihat Data Kartu HPL
                 </a>
             </div>
