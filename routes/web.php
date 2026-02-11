@@ -26,6 +26,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/kartu-hpl/{id}/edit', [KartuHplController::class, 'edit'])->name('kartu-hpl.edit');
     Route::put('/kartu-hpl/{id}', [KartuHplController::class, 'update'])->name('kartu-hpl.update');
     Route::delete('/kartu-hpl/{id}', [KartuHplController::class, 'destroy'])->name('kartu-hpl.destroy');
-    });
+});
 
 require __DIR__.'/auth.php';

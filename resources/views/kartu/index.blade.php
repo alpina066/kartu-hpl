@@ -1,34 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container">
+    <h3>Data Kartu HPL</h3>
 
-    {{-- HEADER --}}
-    <div class="header-bar">
-        <h3>Data Kartu HPL</h3>
-    </div>
+    <a href="{{ route('kartu-hpl.create') }}" class="btn btn-primary mb-3">+ Tambah</a>
 
-    {{-- SEARCH + TAMBAH --}}
-    <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
-        <form method="GET" action="{{ route('kartu-hpl.index') }}" style="display:flex; gap:8px;">
-            <input
-                type="text"
-                name="search"
-                value="{{ $search ?? '' }}"
-                placeholder="Cari nama / suami / alamat..."
-                style="padding:6px 10px; border:1px solid #ccc; border-radius:6px; width:240px;">
-            <button class="btn btn-edit">Cari</button>
-        </form>
-
-        <a href="{{ route('kartu-hpl.create') }}" class="btn btn-save">
-            + Tambah Data
-        </a>
-    </div>
-
-    {{-- TABEL --}}
-    <div class="table-wrapper">
-        <table class="table-hpl">
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm">
             <thead>
                 <tr>
                     <th>No</th>
@@ -40,6 +19,7 @@
                     <th>DX Keb</th>
                     <th>HPHT</th>
                     <th>HPL</th>
+                    <th>Perdarahan</th>
                     <th>BB</th>
                     <th>TB</th>
                     <th>Tensi</th>
@@ -49,22 +29,21 @@
                     <th>Letak Janin</th>
                     <th>LILA</th>
                     <th>Jarak Anak</th>
-                    <th>Partus Tgl</th>
+                    <th>Tgl Partus</th>
                     <th>Penolong</th>
-                    <th>JK</th>
+                    <th>JK Bayi</th>
                     <th>Cara Lahir</th>
                     <th>Bayi</th>
                     <th>Plasenta</th>
                     <th>KU Bayi</th>
                     <th>KU Ibu</th>
                     <th>BBL</th>
-                    <th>LK / LD</th>
+                    <th>LK/LD</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
-
             <tbody>
-                @forelse($data as $item)
+                @foreach($data as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->nama }}</td>
@@ -75,6 +54,7 @@
                     <td>{{ $item->dx_keb }}</td>
                     <td>{{ $item->hpht }}</td>
                     <td>{{ $item->hpl }}</td>
+                    <td>{{ $item->perdarahan }}</td>
                     <td>{{ $item->bb }}</td>
                     <td>{{ $item->tb }}</td>
                     <td>{{ $item->tensi }}</td>
@@ -94,28 +74,18 @@
                     <td>{{ $item->ku_ibu }}</td>
                     <td>{{ $item->bbl }}</td>
                     <td>{{ $item->lk_ld }}</td>
-                    <td class="aksi">
-                        <a href="{{ route('kartu-hpl.edit', ['kartu_hpl' => $item->id]) }}" class="btn btn-edit">Edit</a>
-
-                        <form method="POST" action="{{ route('kartu-hpl.destroy', ['kartu_hpl' => $item->id]) }}">
+                    <td>
+                        <a href="{{ route('kartu-hpl.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('kartu-hpl.destroy', $item->id) }}" method="POST" style="display:inline">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-delete"
-                                onclick="return confirm('Hapus data ini?')">Hapus</button>
+                            <button onclick="return confirm('Hapus data ini?')" class="btn btn-sm btn-danger">Hapus</button>
                         </form>
                     </td>
                 </tr>
-                @empty
-                <tr>
-                    <td colspan="29" style="text-align:center; padding:15px;">
-                        Data tidak ditemukan
-                    </td>
-                </tr>
-                @endforelse
+                @endforeach
             </tbody>
         </table>
     </div>
-
 </div>
-
 @endsection
