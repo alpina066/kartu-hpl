@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class KartuHplController extends Controller
 {
@@ -67,9 +67,13 @@ class KartuHplController extends Controller
     public function edit(Request $request)
     {
         $data = DB::table($this->table)
-            ->where('user_id', Auth::id())
             ->where('created_at', $request->created_at)
+            ->where('user_id', Auth::id())
             ->first();
+
+        if (!$data) {
+            abort(404);
+        }
 
         return view('kartu-hpl.edit', compact('data'));
     }
@@ -77,9 +81,39 @@ class KartuHplController extends Controller
     public function update(Request $request)
     {
         DB::table($this->table)
-            ->where('user_id', Auth::id())
             ->where('created_at', $request->created_at)
-            ->update($request->except(['_token', '_method', 'created_at']));
+            ->where('user_id', Auth::id())
+            ->update([
+                'nama' => $request->nama,
+                'umur' => $request->umur,
+                'suami' => $request->suami,
+                'pekerjaan' => $request->pekerjaan,
+                'alamat' => $request->alamat,
+                'dx_keb' => $request->dx_keb,
+                'hpht' => $request->hpht,
+                'hpl' => $request->hpl,
+                'perdarahan' => $request->perdarahan,
+                'bb' => $request->bb,
+                'tb' => $request->tb,
+                'tensi' => $request->tensi,
+                'hb' => $request->hb,
+                'status_tt' => $request->status_tt,
+                'tablet_fe' => $request->tablet_fe,
+                'letak_janin' => $request->letak_janin,
+                'lila' => $request->lila,
+                'jarak_anak' => $request->jarak_anak,
+                'partus_tgl' => $request->partus_tgl,
+                'penolong' => $request->penolong,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'cara_lahir' => $request->cara_lahir,
+                'bayi' => $request->bayi,
+                'plasenta' => $request->plasenta,
+                'ku_bayi' => $request->ku_bayi,
+                'ku_ibu' => $request->ku_ibu,
+                'bbl' => $request->bbl,
+                'lk_ld' => $request->lk_ld,
+                'updated_at' => now(),
+            ]);
 
         return redirect('/kartu-hpl')->with('success', 'Data berhasil diupdate');
     }
@@ -87,8 +121,8 @@ class KartuHplController extends Controller
     public function destroy(Request $request)
     {
         DB::table($this->table)
-            ->where('user_id', Auth::id())
             ->where('created_at', $request->created_at)
+            ->where('user_id', Auth::id())
             ->delete();
 
         return redirect('/kartu-hpl')->with('success', 'Data berhasil dihapus');
