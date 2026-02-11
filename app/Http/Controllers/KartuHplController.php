@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class KartuHplController extends Controller
 {
-    protected string $table = 'kartu_hpl';
+    protected $table = 'kartu_hpl';
 
     public function index()
     {
@@ -61,68 +61,36 @@ class KartuHplController extends Controller
             'updated_at' => now(),
         ]);
 
-        return redirect()->route('kartu-hpl.index')->with('success', 'Data berhasil disimpan');
+        return redirect('/kartu-hpl')->with('success', 'Data berhasil disimpan');
     }
 
-    public function edit($id)
+    public function edit(Request $request)
     {
         $data = DB::table($this->table)
-            ->where('id', $id)
             ->where('user_id', Auth::id())
+            ->where('created_at', $request->created_at)
             ->first();
-
-        if (!$data) abort(404);
 
         return view('kartu-hpl.edit', compact('data'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         DB::table($this->table)
-            ->where('id', $id)
             ->where('user_id', Auth::id())
-            ->update([
-                'nama' => $request->nama,
-                'umur' => $request->umur,
-                'suami' => $request->suami,
-                'pekerjaan' => $request->pekerjaan,
-                'alamat' => $request->alamat,
-                'dx_keb' => $request->dx_keb,
-                'hpht' => $request->hpht,
-                'hpl' => $request->hpl,
-                'perdarahan' => $request->perdarahan,
-                'bb' => $request->bb,
-                'tb' => $request->tb,
-                'tensi' => $request->tensi,
-                'hb' => $request->hb,
-                'status_tt' => $request->status_tt,
-                'tablet_fe' => $request->tablet_fe,
-                'letak_janin' => $request->letak_janin,
-                'lila' => $request->lila,
-                'jarak_anak' => $request->jarak_anak,
-                'partus_tgl' => $request->partus_tgl,
-                'penolong' => $request->penolong,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'cara_lahir' => $request->cara_lahir,
-                'bayi' => $request->bayi,
-                'plasenta' => $request->plasenta,
-                'ku_bayi' => $request->ku_bayi,
-                'ku_ibu' => $request->ku_ibu,
-                'bbl' => $request->bbl,
-                'lk_ld' => $request->lk_ld,
-                'updated_at' => now(),
-            ]);
+            ->where('created_at', $request->created_at)
+            ->update($request->except(['_token', '_method', 'created_at']));
 
-        return redirect()->route('kartu-hpl.index')->with('success', 'Data berhasil diupdate');
+        return redirect('/kartu-hpl')->with('success', 'Data berhasil diupdate');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         DB::table($this->table)
-            ->where('id', $id)
             ->where('user_id', Auth::id())
+            ->where('created_at', $request->created_at)
             ->delete();
 
-        return redirect()->route('kartu-hpl.index')->with('success', 'Data berhasil dihapus');
+        return redirect('/kartu-hpl')->with('success', 'Data berhasil dihapus');
     }
 }
