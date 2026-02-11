@@ -2,59 +2,127 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 
-class ProfileController extends Controller
+class KartuHplController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    protected $table = 'kartu_hpl';
+
+    public function index()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $data = DB::table($this->table)
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('kartu-hpl.index', ['data' => $data]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function create()
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return view('kartu-hpl.create');
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+        DB::table($this->table)->insert([
+            'user_id' => Auth::id(),
+            'nama' => $request->nama,
+            'umur' => $request->umur,
+            'suami' => $request->suami,
+            'pekerjaan' => $request->pekerjaan,
+            'alamat' => $request->alamat,
+            'dx_keb' => $request->dx_keb,
+            'hpht' => $request->hpht,
+            'hpl' => $request->hpl,
+            'perdarahan' => $request->perdarahan,
+            'bb' => $request->bb,
+            'tb' => $request->tb,
+            'tensi' => $request->tensi,
+            'hb' => $request->hb,
+            'status_tt' => $request->status_tt,
+            'tablet_fe' => $request->tablet_fe,
+            'letak_janin' => $request->letak_janin,
+            'lila' => $request->lila,
+            'jarak_anak' => $request->jarak_anak,
+            'partus_tgl' => $request->partus_tgl,
+            'penolong' => $request->penolong,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'cara_lahir' => $request->cara_lahir,
+            'bayi' => $request->bayi,
+            'plasenta' => $request->plasenta,
+            'ku_bayi' => $request->ku_bayi,
+            'ku_ibu' => $request->ku_ibu,
+            'bbl' => $request->bbl,
+            'lk_ld' => $request->lk_ld,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
 
-        $user = $request->user();
+        return redirect()->route('kartu-hpl.index')->with('success', 'Data berhasil disimpan');
+    }
 
-        Auth::logout();
+    public function edit($id)
+    {
+        $data = DB::table($this->table)
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
 
-        $user->delete();
+        if (!$data) abort(404);
 
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        return view('kartu-hpl.edit', ['data' => $data]);
+    }
 
-        return Redirect::to('/');
+    public function update(Request $request, $id)
+    {
+        DB::table($this->table)
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->update([
+                'nama' => $request->nama,
+                'umur' => $request->umur,
+                'suami' => $request->suami,
+                'pekerjaan' => $request->pekerjaan,
+                'alamat' => $request->alamat,
+                'dx_keb' => $request->dx_keb,
+                'hpht' => $request->hpht,
+                'hpl' => $request->hpl,
+                'perdarahan' => $request->perdarahan,
+                'bb' => $request->bb,
+                'tb' => $request->tb,
+                'tensi' => $request->tensi,
+                'hb' => $request->hb,
+                'status_tt' => $request->status_tt,
+                'tablet_fe' => $request->tablet_fe,
+                'letak_janin' => $request->letak_janin,
+                'lila' => $request->lila,
+                'jarak_anak' => $request->jarak_anak,
+                'partus_tgl' => $request->partus_tgl,
+                'penolong' => $request->penolong,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'cara_lahir' => $request->cara_lahir,
+                'bayi' => $request->bayi,
+                'plasenta' => $request->plasenta,
+                'ku_bayi' => $request->ku_bayi,
+                'ku_ibu' => $request->ku_ibu,
+                'bbl' => $request->bbl,
+                'lk_ld' => $request->lk_ld,
+                'updated_at' => now(),
+            ]);
+
+        return redirect()->route('kartu-hpl.index')->with('success', 'Data berhasil diupdate');
+    }
+
+    public function destroy($id)
+    {
+        DB::table($this->table)
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->delete();
+
+        return redirect()->route('kartu-hpl.index')->with('success', 'Data berhasil dihapus');
     }
 }
